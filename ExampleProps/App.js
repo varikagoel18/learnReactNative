@@ -8,35 +8,40 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet,AppRegistry, Text, View, Image} from 'react-native';
+import { Button } from 'react-native'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class Fruits extends Component<Props> {
+class FruitsButton extends Component{
+  render(){
+    return(
+      <Button title={this.props.title}
+              color={this.props.color}
+              
+              ></Button>
+    );
+  }
+}
+export default class Fruits extends Component {
   render() {
+
+    _onPressButton() {
+      Alert.alert('You tapped the button!')
+    }
+    
     let pic = {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
+
     return (
-      <View style={styles.container}>
-        <Text > Eat Fruits</Text>
-        <Image source={pic}style={{width: 193, height: 110}} ></Image>
+      <View style={{alignContent:'center', margin:20 }}>
+        <FruitsButton title = 'Banana' color = '#FFFF00' onPress={this._onPressButton} ></FruitsButton>
+        <FruitsButton title = 'Orange' color = '#FFA500'></FruitsButton>
+        <FruitsButton title = 'Apple' color = '#FF0000'></FruitsButton>
+
+        <Image source={pic} style={{width: 193, height: 110 , margin:20}}/>
+
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
 AppRegistry.registerComponent('AwesomeProject', () => Fruits);
