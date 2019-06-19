@@ -13,6 +13,7 @@ import {
   TextInput,
   Button,
   View,
+  ScrollView,
   Text
 } from "react-native";
 
@@ -79,7 +80,7 @@ export default class App extends Component {
           />
         </View>
         <View style={styles.innerList}>
-          <View>{listShowPlaces}</View>
+          <ScrollView>{listShowPlaces}</ScrollView>
         </View>
       </View>
     );
