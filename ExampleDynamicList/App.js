@@ -35,34 +35,17 @@ export default class App extends Component {
   };
 
   addPlaceHandler = event => {
-    // console.log("test");
-    // console.log("" + this.state.placeName);
-    // if (this.state.placeName.trim() === "") {
-    //   alert("Add a place name");
-    //   return;
-    // }
-    // const prevPlaces = this.state.places;
-
-    // const error = prevPlaces.map(pName => {
-    //   return pName === this.state.placeName ? true : false;
-    // });
-
-    // if (error) {
-    //   alert("Place already in list. Add another");
-    //   return;
-    // }
-
-    // this.setState({ places: new_places });
-    // const listShowPlaces = this.state.places.map(plce => {
-    //   <Text>test</Text>;
-    // });
-    // console.log(":::::::::::"+listShowPlaces)
+    if (this.state.placeName.trim() === "") {
+      alert("Please add a place");
+      return;
+    }
     this.setState(prevState => {
       return {
         places: prevState.places.concat(prevState.placeName)
       };
     });
 
+    this.setState({ placeName: "" });
     console.log("array : " + this.state.places.length);
   };
 
@@ -95,10 +78,9 @@ export default class App extends Component {
             title="Add Me"
           />
         </View>
-        <View>
-          <Text>---------------------------------- </Text>
+        <View style={styles.innerList}>
+          <View>{listShowPlaces}</View>
         </View>
-        <View>{listShowPlaces}</View>
       </View>
     );
   }
@@ -107,18 +89,18 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#F5FCFF",
-    alignItems: "flex-start",
-    width: "100%",
-    marginTop: 50
+    alignItems: "center",
+    marginTop: 50,
+    backgroundColor: "white"
   },
   innerContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    backgroundColor: "#F5FCFF",
-    margin: 10
+    alignItems: "flex-start"
+  },
+  innerList: {
+    flex: 5,
+    flexDirection: "row",
+    alignItems: "flex-start"
   }
 });
