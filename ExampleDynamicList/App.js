@@ -7,7 +7,14 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, TextInput, Button, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  TextInput,
+  Button,
+  View,
+  Text
+} from "react-native";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -18,21 +25,58 @@ const instructions = Platform.select({
 
 export default class App extends Component {
   state = {
-    textValue: ""
+    placeName: "",
+    places: ["sample"]
   };
 
   textChangeHandler = val => {
-    this.setState({ textValue: val });
+    //  console.log(this.state.placeName);
+    this.setState({ placeName: val });
+  };
+
+  addPlaceHandler = event => {
+    // console.log("test");
+    // console.log("" + this.state.placeName);
+    // if (this.state.placeName.trim() === "") {
+    //   alert("Add a place name");
+    //   return;
+    // }
+    // const prevPlaces = this.state.places;
+
+    // const error = prevPlaces.map(pName => {
+    //   return pName === this.state.placeName ? true : false;
+    // });
+
+    // if (error) {
+    //   alert("Place already in list. Add another");
+    //   return;
+    // }
+
+    // this.setState({ places: new_places });
+    // const listShowPlaces = this.state.places.map(plce => {
+    //   <Text>test</Text>;
+    // });
+    // console.log(":::::::::::"+listShowPlaces)
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(prevState.placeName)
+      };
+    });
+
+    console.log("array : " + this.state.places.length);
   };
 
   render() {
+    const listShowPlaces = this.state.places.map((pName, index) => (
+      <Text key={pName + index}> {pName}</Text>
+    ));
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <TextInput
-            value={this.state.textValue}
+            value={this.state.placeName}
             onChangeText={this.textChangeHandler}
-            placeholder="Enter text here"
+            placeholder="Enter place name"
             style={{
               height: 40,
               width: "70%",
@@ -47,9 +91,14 @@ export default class App extends Component {
               width: "30%",
               padding: 10
             }}
-            title="Press Me"
+            onPress={this.addPlaceHandler}
+            title="Add Me"
           />
         </View>
+        <View>
+          <Text>---------------------------------- </Text>
+        </View>
+        <View>{listShowPlaces}</View>
       </View>
     );
   }
@@ -58,9 +107,9 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    flexDirection: "row",
     backgroundColor: "#F5FCFF",
+    alignItems: "flex-start",
     width: "100%",
     marginTop: 50
   },
@@ -71,15 +120,5 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: "#F5FCFF",
     margin: 10
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
   }
 });
