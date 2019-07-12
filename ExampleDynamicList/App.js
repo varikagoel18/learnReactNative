@@ -13,16 +13,10 @@ import {
   TextInput,
   Button,
   View,
-  ScrollView,
-  Text
+  ScrollView
 } from "react-native";
-
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
+import ListItem from ".//src/components/ListItem";
+import PlaceInput from ".//src/components/PlaceInput";
 
 export default class App extends Component {
   state = {
@@ -52,33 +46,19 @@ export default class App extends Component {
 
   render() {
     const listShowPlaces = this.state.places.map((pName, index) => (
-      <Text key={pName + index}> {pName}</Text>
+      <ListItem
+        key={pName + index}
+        placeName={pName}
+        onItemPressed={() => alert("Item pressed:" + pName + ", ID" + index)}
+      />
     ));
+
     return (
       <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <TextInput
-            value={this.state.placeName}
-            onChangeText={this.textChangeHandler}
-            placeholder="Enter place name"
-            style={{
-              height: 40,
-              width: "70%",
-              borderColor: "black",
-              borderWidth: 1,
-              marginRight: 10
-            }}
-          />
-          <Button
-            style={{
-              height: 40,
-              width: "30%",
-              padding: 10
-            }}
-            onPress={this.addPlaceHandler}
-            title="Add Me"
-          />
-        </View>
+        <PlaceInput
+          style={styles.innerContainer}
+          placeName={this.state.placeName}
+        />
         <View style={styles.innerList}>
           <ScrollView>{listShowPlaces}</ScrollView>
         </View>
@@ -90,9 +70,9 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    marginTop: 50,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    margin: 10,
+    marginTop: 50
   },
   innerContainer: {
     flex: 1,
@@ -100,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   innerList: {
-    flex: 5,
+    flex: 6,
     flexDirection: "row",
     alignItems: "flex-start"
   }
