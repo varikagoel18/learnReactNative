@@ -21,7 +21,7 @@ const placeInput = props => {
           width: "30%",
           padding: 10
         }}
-        onPress={this.addPlaceHandler}
+        onPress={props.onPress}
         title="Add Me"
       />
     </View>

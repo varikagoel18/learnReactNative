@@ -7,26 +7,29 @@
  */
 
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  TextInput,
-  Button,
-  View,
-  ScrollView
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import ListItem from ".//src/components/ListItem";
 import PlaceInput from ".//src/components/PlaceInput";
+import PlaceList from ".//src/components/PlaceList";
 
 export default class App extends Component {
   state = {
     placeName: "",
-    places: ["sample"]
+    places: []
   };
 
   textChangeHandler = val => {
-    //  console.log(this.state.placeName);
     this.setState({ placeName: val });
+  };
+
+  deleteItemHandler = index => {
+    this.setState(prevState => {
+      return {
+        places: Array.from(prevState.places).filter((place, i) => {
+          return i !== index;
+        })
+      };
+    });
   };
 
   addPlaceHandler = event => {
@@ -45,11 +48,11 @@ export default class App extends Component {
   };
 
   render() {
-    const listShowPlaces = this.state.places.map((pName, index) => (
+    const listShowPlaces = Array.from(this.state.places).map((pName, index) => (
       <ListItem
         key={pName + index}
         placeName={pName}
-        onItemPressed={() => alert("Item pressed:" + pName + ", ID" + index)}
+        onItemPressed={() => this.deleteItemHandler(index)}
       />
     ));
 
@@ -58,10 +61,10 @@ export default class App extends Component {
         <PlaceInput
           style={styles.innerContainer}
           placeName={this.state.placeName}
+          onChangeText={this.textChangeHandler}
+          onPress={this.addPlaceHandler}
         />
-        <View style={styles.innerList}>
-          <ScrollView>{listShowPlaces}</ScrollView>
-        </View>
+        <PlaceList list={listShowPlaces} />
       </View>
     );
   }
