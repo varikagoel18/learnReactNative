@@ -8,7 +8,6 @@
 
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import ListItem from ".//src/components/ListItem";
 import PlaceInput from ".//src/components/PlaceInput";
 import PlaceList from ".//src/components/PlaceList";
 
@@ -22,11 +21,11 @@ export default class App extends Component {
     this.setState({ placeName: val });
   };
 
-  deleteItemHandler = index => {
+  deleteItemHandler = itemKey => {
     this.setState(prevState => {
       return {
-        places: Array.from(prevState.places).filter((place, i) => {
-          return i !== index;
+        places: Array.from(prevState.places).filter((item, i) => {
+          return item.key !== itemKey;
         })
       };
     });
@@ -37,9 +36,13 @@ export default class App extends Component {
       alert("Please add a place");
       return;
     }
+
     this.setState(prevState => {
       return {
-        places: prevState.places.concat(prevState.placeName)
+        places: prevState.places.concat({
+          key: Math.random(),
+          name: this.state.placeName
+        })
       };
     });
 
@@ -48,14 +51,6 @@ export default class App extends Component {
   };
 
   render() {
-    const listShowPlaces = Array.from(this.state.places).map((pName, index) => (
-      <ListItem
-        key={pName + index}
-        placeName={pName}
-        onItemPressed={() => this.deleteItemHandler(index)}
-      />
-    ));
-
     return (
       <View style={styles.container}>
         <PlaceInput
@@ -64,7 +59,10 @@ export default class App extends Component {
           onChangeText={this.textChangeHandler}
           onPress={this.addPlaceHandler}
         />
-        <PlaceList list={listShowPlaces} />
+        <PlaceList
+          data={this.state.places}
+          onItemPressed={this.deleteItemHandler}
+        />
       </View>
     );
   }

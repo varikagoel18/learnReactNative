@@ -1,8 +1,22 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { FlatList, View } from "react-native";
+import ListItem from "./ListItem";
 
 const placeList = props => {
-  return <ScrollView>{props.list}</ScrollView>;
+  // const listShowPlaces = Array.from(props.data).map((place, index) => (
+
+  // ));
+  return (
+    <FlatList
+      data={Array.from(props.data)}
+      renderItem={info => (
+        <ListItem
+          placeName={info.item.name}
+          onItemPressed={() => props.onItemPressed(info.item.key)}
+        />
+      )}
+    />
+  );
 };
 
 export default placeList;
