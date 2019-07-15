@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, Image } from "react-native";
 import ListItem from "./ListItem";
 
 const placeList = props => {
@@ -13,6 +13,7 @@ const placeList = props => {
         <ListItem
           placeName={info.item.name}
           onItemPressed={() => props.onItemPressed(info.item.key)}
+          image={info.item.image}
         />
       )}
     />

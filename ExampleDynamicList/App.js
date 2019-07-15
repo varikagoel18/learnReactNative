@@ -10,6 +10,10 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import PlaceInput from ".//src/components/PlaceInput";
 import PlaceList from ".//src/components/PlaceList";
+import img1 from ".//src/assets/img1.jpeg";
+import img2 from ".//src/assets/img2.jpeg";
+import img3 from ".//src/assets/img3.jpeg";
+import img4 from ".//src/assets/download.png";
 
 export default class App extends Component {
   state = {
@@ -37,11 +41,35 @@ export default class App extends Component {
       return;
     }
 
+    const random = Math.floor(Math.random() * 10) + 1;
+    var img;
+    switch (random % 4) {
+      case 0:
+        img = "https://picsum.photos/id/514/200/300";
+        break;
+      case 1:
+        img = img1;
+        break;
+      case 2:
+        img = img2;
+        break;
+      case 3:
+        img = img3;
+        break;
+      default:
+        img = img4;
+        break;
+    }
+
     this.setState(prevState => {
       return {
         places: prevState.places.concat({
-          key: Math.random(),
-          name: this.state.placeName
+          key: random + this.state.placeName,
+          name: this.state.placeName,
+          image: {
+            uri:
+              "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          }
         })
       };
     });
