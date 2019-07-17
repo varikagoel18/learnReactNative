@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/varikagoel18/learnReactNative/issues"
   },
-  "homepage": "https://github.com/varikagoel18/learnReactNative#readme"
+  "homepage": "https://github.com/varikagoel18/learnReactNative#readme",
+  "dependencies": {
+    "react-redux": "^6.0.1"
+  }
 }
