@@ -14,23 +14,44 @@ import img1 from ".//src/assets/img1.jpeg";
 import img2 from ".//src/assets/img2.jpeg";
 import img3 from ".//src/assets/img3.jpeg";
 import img4 from ".//src/assets/download.png";
+import PlaceDetail from ".//src/components/PlaceDetail";
 
 export default class App extends Component {
   state = {
     placeName: "",
-    places: []
+    places: [],
+    selectedPlace: null
   };
 
   textChangeHandler = val => {
     this.setState({ placeName: val });
   };
 
-  deleteItemHandler = itemKey => {
+  deletePlaceHandler = itemKey => {
     this.setState(prevState => {
       return {
         places: Array.from(prevState.places).filter((item, i) => {
           return item.key !== itemKey;
+        }),
+        selectedPlace: null
+      };
+    });
+  };
+
+  selectPlaceHandler = key => {
+    this.setState(prevState => {
+      return {
+        selectedPlace: Array.from(prevState.places).find(place => {
+          return place.key === key;
         })
+      };
+    });
+  };
+
+  modalClosedHandler = () => {
+    this.setState(prevState => {
+      return {
+        selectedPlace: null
       };
     });
   };
@@ -42,24 +63,6 @@ export default class App extends Component {
     }
 
     const random = Math.floor(Math.random() * 10) + 1;
-    var img;
-    switch (random % 4) {
-      case 0:
-        img = "https://picsum.photos/id/514/200/300";
-        break;
-      case 1:
-        img = img1;
-        break;
-      case 2:
-        img = img2;
-        break;
-      case 3:
-        img = img3;
-        break;
-      default:
-        img = img4;
-        break;
-    }
 
     this.setState(prevState => {
       return {
@@ -81,6 +84,11 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <PlaceDetail
+          selectedPlace={this.state.selectedPlace}
+          deletePlace={this.deletePlaceHandler}
+          onModalClosed={this.modalClosedHandler}
+        />
         <PlaceInput
           style={styles.innerContainer}
           placeName={this.state.placeName}
@@ -89,7 +97,7 @@ export default class App extends Component {
         />
         <PlaceList
           data={this.state.places}
-          onItemPressed={this.deleteItemHandler}
+          onItemPressed={this.selectPlaceHandler}
         />
       </View>
     );
