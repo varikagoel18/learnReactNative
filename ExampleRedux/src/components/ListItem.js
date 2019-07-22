@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-  Image
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 const listItem = props => {
   return (
-    <TouchableHighlight onPress={props.onItemPressed}>
+    <TouchableOpacity onPress={props.onItemPressed}>
       <View style={styles.listItem}>
         <Image
           style={styles.placeImage}
@@ -19,7 +13,7 @@ const listItem = props => {
         />
         <Text>{props.placeName}</Text>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
